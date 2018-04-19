@@ -37,7 +37,7 @@ namespace puertos
                 int xo = server.myHero.pos.y+1;
                 int yo = server.myHero.pos.x+1;
 
-                Console.WriteLine("x: " + xo + " y: " + yo);
+                
 
                 int xi = server.myHero.spawnPos.x;
                 int yi = server.myHero.spawnPos.y;

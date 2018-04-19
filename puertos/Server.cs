@@ -26,8 +26,7 @@ namespace puertos
 
         public hero myHero { get; set; }
         public List<hero> heroes;
-        public Drink[] drink {get;set;}
-        public Mine[] mine { get; set; }
+       
         public bool error { get; set; } = false;
         
 
@@ -38,7 +37,16 @@ namespace puertos
         public string errorText { get; private set; }
         private string serverURL;
         public char[,] Board { get;set; }
-        public bool[,] recorrido { get; set; }
+
+        public int[] Mines { get; set; }
+        public int[] Drink { get; set; }
+
+        private void Search(char[,] board)
+        {
+            for(int i = 0; i)
+
+        }
+
 
         public Server(string url, string key, string mode = "training", uint turns = 0, string map = null)
         {
@@ -57,6 +65,7 @@ namespace puertos
 
         public void newGame()
         {
+
             string Uri = serverURL;
             if (mode == "training")
                 Uri += "/api/training";
@@ -131,7 +140,7 @@ namespace puertos
             currentTurn = gameResponse.game.turns;
             maxTurns = gameResponse.game.maxTurns;
             finished = gameResponse.game.finished;
-            CrearTablero(gameResponse.game.board.size, gameResponse.game.board.tiles, Board, recorrido);
+            CrearTablero(gameResponse.game.board.size, gameResponse.game.board.tiles, Board);
 
 
 
@@ -172,45 +181,16 @@ namespace puertos
 
         }
 
-        public void SearchPos(char[,] board, int tam, Mine[] mine, Drink[] drink)
+        private void CrearTablero(int size,string data, char[,] board)
         {
-            int contMine = 0;
-            int contDrink = 0;
-            for(int i = 0; i < tam; i++)
-            {
-                for(int j = 0; j < tam; j++)
-                {
-                    if (board[i, j] == '$')
-                    {
-                        mine[contMine].x = i;
-                        mine[contMine].y = j;
-                        contMine++;
-
-                    }
-                    else if(board[i, j] == '[')
-                    {
-                        mine[contDrink].x = i;
-                        drink[contDrink].y = j;
-                        contDrink++;
-                    }
-                }
-            }
-            
-        }
-
-        private void CrearTablero(int size, string data, char[,] board, bool[,] recorrido)
-        {
-
             
             int cont  = 0;
             char[,] arrray = new char[size, size];
-            bool[,] recorridoAux = new bool[size, size];
 
             for (int i = 0; i < size; i++) 
             {
                 for(int j = 0; j < size; j++)
                 {
-                    recorridoAux[i,j] = true;
                     cont++;
                    if(data[cont-1] == '@')
                     {
@@ -236,7 +216,6 @@ namespace puertos
                     else if (data[cont] == '#')
                     {
                         arrray[i, j] = '#';
-                        recorridoAux[i, j] = false;
                     }
                     else if (data[cont-1] == '$')
                     {
