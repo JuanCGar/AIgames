@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace puertos
 {
-    class moveActions
+    class MoveActions
     {
+        private Server server;
+
     }
 }

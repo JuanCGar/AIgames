@@ -215,21 +215,39 @@ namespace puertos
                     }
                     else if (data[cont-1] == '$')
                     {
-                        if (data[cont] == '1')
+                        
+                         if(data[cont] == '1' && myHero.id != 1)
                         {
                             arrray[i, j] = 'A';
                         }
-                        else if (data[cont] == '2')
+                        else if (data[cont] == '2' && myHero.id != 2)
                         {
                             arrray[i, j] = 'B';
                         }
-                        else if (data[cont] == '3')
+                        
+                        else if (data[cont] == '3' && myHero.id != 3)
                         {
                             arrray[i, j] = 'C';
                         }
-                        else if (data[cont] == '4')
+                        else if (data[cont] == '4' && myHero.id != 4)
                         {
                             arrray[i, j] = 'D';
+                        }
+                        else if (data[cont] == '1' && myHero.id == 1)
+                        {
+                            arrray[i, j] = '#';
+                        }
+                        else if (data[cont] == '2' && myHero.id == 2)
+                        {
+                            arrray[i, j] = '#';
+                        }
+                        else if (data[cont] == '3' && myHero.id == 3)
+                        {
+                            arrray[i, j] = '#';
+                        }
+                        else if (data[cont] == '4' && myHero.id == 4)
+                        {
+                            arrray[i, j] = '#';
                         }
                         else
                             arrray[i, j] = '$';
@@ -238,6 +256,7 @@ namespace puertos
                     {
                         arrray[i, j] = 'Q';
                     }
+                    
                     else
                         arrray[i, j] = ' ';
                     cont++;

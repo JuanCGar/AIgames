@@ -51,6 +51,7 @@ namespace puertos
                     server.moveHero(Direction.South);
                 else if (server.Board[xo , yo-1] == '$' && yo > 0)
                     server.moveHero(Direction.North);
+                 
 
 
                 else
