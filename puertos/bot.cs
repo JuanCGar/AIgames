@@ -42,14 +42,14 @@ namespace puertos
                 int xi = server.myHero.spawnPos.x;
                 int yi = server.myHero.spawnPos.y;
 
-
+                
                 if (server.Board[xo+1, yo] == '$')
                     server.moveHero(Direction.West);
-                else if (server.Board[xo -1, yo] == '$')
+                else if (server.Board[xo -1, yo] == '$' && xo > 0)
                     server.moveHero(Direction.East);
                 else if (server.Board[xo , yo+1] == '$')
                     server.moveHero(Direction.South);
-                else if (server.Board[xo , yo-1] == '$')
+                else if (server.Board[xo , yo-1] == '$' && yo > 0)
                     server.moveHero(Direction.North);
 
 
