@@ -38,6 +38,7 @@ namespace puertos
         public string errorText { get; private set; }
         private string serverURL;
         public char[,] Board { get;set; }
+        public bool[,] recorrido { get; set; }
 
         public Server(string url, string key, string mode = "training", uint turns = 0, string map = null)
         {
@@ -56,7 +57,6 @@ namespace puertos
 
         public void newGame()
         {
-
             string Uri = serverURL;
             if (mode == "training")
                 Uri += "/api/training";
@@ -131,7 +131,7 @@ namespace puertos
             currentTurn = gameResponse.game.turns;
             maxTurns = gameResponse.game.maxTurns;
             finished = gameResponse.game.finished;
-            CrearTablero(gameResponse.game.board.size, gameResponse.game.board.tiles, Board);
+            CrearTablero(gameResponse.game.board.size, gameResponse.game.board.tiles, Board, recorrido);
 
 
 
@@ -198,16 +198,19 @@ namespace puertos
             
         }
 
-        private void CrearTablero(int size,string data, char[,] board)
+        private void CrearTablero(int size, string data, char[,] board, bool[,] recorrido)
         {
+
             
             int cont  = 0;
             char[,] arrray = new char[size, size];
+            bool[,] recorridoAux = new bool[size, size];
 
             for (int i = 0; i < size; i++) 
             {
                 for(int j = 0; j < size; j++)
                 {
+                    recorridoAux[i,j] = true;
                     cont++;
                    if(data[cont-1] == '@')
                     {
@@ -233,6 +236,7 @@ namespace puertos
                     else if (data[cont] == '#')
                     {
                         arrray[i, j] = '#';
+                        recorridoAux[i, j] = false;
                     }
                     else if (data[cont-1] == '$')
                     {
