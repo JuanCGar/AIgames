@@ -24,9 +24,10 @@ namespace puertos
         private string playUrl;
         public string viewURL { get; private set; }
 
-       public hero myHero { get; set; }
+        public hero myHero { get; set; }
         public List<hero> heroes;
-
+        public Drink[] drink {get;set;}
+        public Mine[] mine { get; set; }
         public bool error { get; set; } = false;
         
 
@@ -36,7 +37,6 @@ namespace puertos
         public bool errored { get; private set; }
         public string errorText { get; private set; }
         private string serverURL;
-        public Tile[][] board;
         public char[,] Board { get;set; }
 
         public Server(string url, string key, string mode = "training", uint turns = 0, string map = null)
@@ -61,7 +61,7 @@ namespace puertos
             if (mode == "training")
                 Uri += "/api/training";
             else
-                Uri += "api/arena";
+                Uri += "/api/arena";
             
                 // Crea un request
                 WebRequest request = WebRequest.Create(Uri);
@@ -72,8 +72,8 @@ namespace puertos
                 postData += key;
                if (mode == "training" && turns > 0)
                     postData += "&turns=" + turns;
-                //if (map == null)
-                  //  postData += "&map=" + map;
+                if (map != null)
+                    postData += "&map=" + map;
                 Console.WriteLine(postData);
                 byte[] byteArray = Encoding.UTF8.GetBytes(postData);
                 // cONTENTTYPE
@@ -120,7 +120,6 @@ namespace puertos
 
             gameResponse gameResponse = JsonConvert.DeserializeObject<gameResponse>(json);
 
-            Console.WriteLine(gameResponse.game.heroes[0].name);
 
             playUrl = gameResponse.playUrl;
             viewURL = gameResponse.viewUrl;
@@ -132,7 +131,6 @@ namespace puertos
             currentTurn = gameResponse.game.turns;
             maxTurns = gameResponse.game.maxTurns;
             finished = gameResponse.game.finished;
-            //createBoard(gameResponse.game.board.size, gameResponse.game.board.tiles);
             CrearTablero(gameResponse.game.board.size, gameResponse.game.board.tiles, Board);
 
 
@@ -142,7 +140,6 @@ namespace puertos
         public void moveHero(string direction)
         {
             WebRequest request = WebRequest.Create(playUrl);
-
             string parameters = "key=" + key + "&dir=" + direction;
             Console.WriteLine(parameters);
             byte[] byteArray = Encoding.UTF8.GetBytes(parameters);
@@ -175,7 +172,31 @@ namespace puertos
 
         }
 
+        public void SearchPos(char[,] board, int tam, Mine[] mine, Drink[] drink)
+        {
+            int contMine = 0;
+            int contDrink = 0;
+            for(int i = 0; i < tam; i++)
+            {
+                for(int j = 0; j < tam; j++)
+                {
+                    if (board[i, j] == '$')
+                    {
+                        mine[contMine].x = i;
+                        mine[contMine].y = j;
+                        contMine++;
 
+                    }
+                    else if(board[i, j] == '[')
+                    {
+                        mine[contDrink].x = i;
+                        drink[contDrink].y = j;
+                        contDrink++;
+                    }
+                }
+            }
+            
+        }
 
         private void CrearTablero(int size,string data, char[,] board)
         {
@@ -255,6 +276,7 @@ namespace puertos
                     else if (data[cont-1] == '[')
                     {
                         arrray[i, j] = 'Q';
+                        
                     }
                     
                     else
@@ -275,91 +297,8 @@ namespace puertos
             
 
         }
-        private void createBoard(int size, string data)
-        {
-            
-            //check to see if the board list is already created, if it is, we just overwrite its values
-            if (board == null || board.Length != size)
-            {
-                board = new Tile[size][];
 
-                //need to initialize the lists within the list
-                for (int i = 0; i < size; i++)
-                {
-                    board[i] = new Tile[size];
-                }
-            }
-
-            //convert the string to the List<List<Tile>>
-            int x = 0;
-            int y = 0;
-            char[] charData = data.ToCharArray();
-
-            for (int i = 0; i < charData.Length; i += 2)
-            {
-                
-                switch (charData[i])
-                {
-                    case '#':
-                        board[x][y] = Tile.IMPASSABLE_WOOD;
-                        break;
-                    case ' ':
-                        board[x][y] = Tile.FREE;
-                        break;
-                    case '@':
-                        switch (charData[i + 1])
-                        {
-                            case '1':
-                                board[x][y] = Tile.HERO_1;
-                                break;
-                            case '2':
-                                board[x][y] = Tile.HERO_2;
-                                break;
-                            case '3':
-                                board[x][y] = Tile.HERO_3;
-                                break;
-                            case '4':
-                                board[x][y] = Tile.HERO_4;
-                                break;
-
-                        }
-                        break;
-                    case '[':
-                        board[x][y] = Tile.TAVERN;
-                        break;
-                    case '$':
-                        switch (charData[i + 1])
-                        {
-                            case '-':
-                                board[x][y] = Tile.GOLD_MINE_NEUTRAL;
-                                break;
-                            case '1':
-                                board[x][y] = Tile.GOLD_MINE_1;
-                                break;
-                            case '2':
-                                board[x][y] = Tile.GOLD_MINE_2;
-                                break;
-                            case '3':
-                                board[x][y] = Tile.GOLD_MINE_3;
-                                break;
-                            case '4':
-                                board[x][y] = Tile.GOLD_MINE_4;
-                                break;
-                        }
-                        break;
-                }
-
-                //time to increment x and y
-                x++;
-                if (x == size)
-                {
-                    x = 0;
-                    y++;
-                }
-            }
-
-
-        }
+       
     }
 }
 

@@ -34,8 +34,8 @@ namespace puertos
             while (server.finished == false && server.errored == false)
             {
                 //posiciones actuales de myheroe
-                int xo = server.myHero.pos.y +1;
-                int yo = server.myHero.pos.x +1;
+                int xo = server.myHero.pos.y+1;
+                int yo = server.myHero.pos.x+1;
 
                 Console.WriteLine("x: " + xo + " y: " + yo);
 

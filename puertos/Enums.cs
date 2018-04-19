@@ -6,22 +6,6 @@ using System.Threading.Tasks;
 
 namespace puertos
 {
-    enum Tile
-    {
-        IMPASSABLE_WOOD,
-        FREE,
-        HERO_1,
-        HERO_2,
-        HERO_3,
-        HERO_4,
-        TAVERN,
-        GOLD_MINE_NEUTRAL,
-        GOLD_MINE_1,
-        GOLD_MINE_2,
-        GOLD_MINE_3,
-        GOLD_MINE_4
-    }
-
     class Direction
     {
         public const string Stay = "Stay";
@@ -29,5 +13,17 @@ namespace puertos
         public const string East = "East";
         public const string South = "South";
         public const string West = "West";
+    }
+    class posItems
+    {
+       Mine mine{ get; set; }
+
+
+
+    }
+    class Mine
+    {
+        public int x { get; set; }
+        public int y { get; set; }
     }
 }
