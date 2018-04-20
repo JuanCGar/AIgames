@@ -56,13 +56,13 @@ namespace puertos
     ////////////// dentro de hero ///////////////
     class pos
     {
-        public int x { get; set; }
         public int y { get; set; }
+        public int x { get; set; }
     }
     class spawnPos
     {
-        public int x { get; set; }
         public int y { get; set; }
+        public int x { get; set; }
     }
 
     ////////////// dentro de hero ///////////////

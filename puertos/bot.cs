@@ -26,13 +26,13 @@ namespace puertos
         public bool frontIsClear(char heading)
         {
             if(heading == 'u')
-                return((server.myHero.pos.y != 0) && server.Board[server.myHero.pos.y - 1,server.myHero.pos.x] != '#');
+                return((server.myHero.pos.x != 0) && server.Board[server.myHero.pos.x - 1,server.myHero.pos.y] != '#');
             else if(heading == 'd')
-                return ((server.myHero.pos.y != server.boardSize-1) && server.Board[server.myHero.pos.y + 1 , server.myHero.pos.x] != '#');
+                return ((server.myHero.pos.x != server.boardSize-1) && server.Board[server.myHero.pos.x + 1 , server.myHero.pos.y] != '#');
             else if(heading == 'r')
-                return ((server.myHero.pos.x != server.boardSize-1) && server.Board[server.myHero.pos.y , server.myHero.pos.x + 1] != '#');
+                return ((server.myHero.pos.y != server.boardSize-1) && server.Board[server.myHero.pos.x , server.myHero.pos.y + 1] != '#');
             else if(heading == 'l')
-                return ((server.myHero.pos.x != 0) && server.Board[server.myHero.pos.y , server.myHero.pos.x - 1] != '#');
+                return ((server.myHero.pos.y != 0) && server.Board[server.myHero.pos.x , server.myHero.pos.y- 1] != '#');
             else
                 return false;
             
@@ -378,11 +378,25 @@ namespace puertos
                     {
                         moveTo(heading);
                     Console.WriteLine("heading: " + heading);
+
+
+
+                    Console.WriteLine("("+server.myHero.pos.x + ","+server.myHero.pos.y+")");
                     }
 
-                    if (frontIsBlocked(heading))
+                Console.Write("Front Is");
+                Console.WriteLine(frontIsClear(heading) ? " clear" : " blocked");
+
+
+                if (!frontIsClear(heading))
                     {
-                    server.headingNumber++;
+                    while (!frontIsClear(headings[(server.headingNumber + 1) % 5]))
+                    {
+                        server.headingNumber = server.headingNumber + 1;
+                        hn = server.headingNumber;
+                        Console.WriteLine("correct heading to: " + headings[server.headingNumber % 5]);
+                    }
+
                     heading = headings[hn % 5];//se recorre de manera circular el arreglo
                     }
 
