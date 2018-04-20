@@ -44,6 +44,15 @@ namespace puertos
         public int[] Mines { get; set; }
         public int[] Drink { get; set; }
         public int headingNumber { get; set; }
+        public int[,] items { get; set; }
+
+        int[,] itemsPos { get; set; }
+
+        public int[,] DrinkPos { get; set; }
+        public int[,] MinePos { get; set; }
+
+        public int MineTotal;
+        public int DrinkTotal;
 
 
 
@@ -143,7 +152,7 @@ namespace puertos
 
             boardSize = gameResponse.game.board.size;
             //createBoard(gameResponse.game.board.size, gameResponse.game.board.tiles);
-            CrearTablero(gameResponse.game.board.size, gameResponse.game.board.tiles, Board, recorrido);
+            CrearTablero(gameResponse.game.board.size, gameResponse.game.board.tiles, Board, recorrido,items,DrinkPos,MinePos,ref MineTotal, ref DrinkTotal);
 
 
 
@@ -186,13 +195,18 @@ namespace puertos
 
         }
 
-        private void CrearTablero(int size,string data, char[,] board, bool[,] recorrido)
+        private void CrearTablero(int size,string data, char[,] board, bool[,] recorrido, int[,] itemsMap, int[,] drinksPos , int[,] MinePos, ref int MineTotal, ref int DrinkTotal )
         {
             
             int cont  = 0;
+            int DrinkCont = 0;
+            int MineCont = 0;
             char[,] arrray = new char[size, size];
             bool[,] recorridoAux = new bool[size, size];
+            int[,] Newitems = new int[size, size];
 
+            
+ 
             for (int i = 0; i < size; i++) 
             {
                 for(int j = 0; j < size; j++)
@@ -227,23 +241,32 @@ namespace puertos
                     }
                     else if (data[cont-1] == '$')
                     {
-                        
-                         if(data[cont] == '1' && myHero.id != 1)
+
+
+                        if (data[cont] == '1' && myHero.id != 1)
                         {
                             arrray[i, j] = 'A';
+                            Newitems[i, j] = 1;
+                            MineCont++;
                         }
                         else if (data[cont] == '2' && myHero.id != 2)
                         {
                             arrray[i, j] = 'B';
+                            Newitems[i, j] = 1;
+                            MineCont++;
                         }
-                        
+
                         else if (data[cont] == '3' && myHero.id != 3)
                         {
                             arrray[i, j] = 'C';
+                            Newitems[i, j] = 1;
+                            MineCont++;
                         }
                         else if (data[cont] == '4' && myHero.id != 4)
                         {
                             arrray[i, j] = 'D';
+                            Newitems[i, j] = 1;
+                            MineCont++;
                         }
                         else if (data[cont] == '1' && myHero.id == 1)
                         {
@@ -252,6 +275,7 @@ namespace puertos
                         else if (data[cont] == '2' && myHero.id == 2)
                         {
                             arrray[i, j] = '#';
+
                         }
                         else if (data[cont] == '3' && myHero.id == 3)
                         {
@@ -262,10 +286,17 @@ namespace puertos
                             arrray[i, j] = '#';
                         }
                         else
+                        {
                             arrray[i, j] = '$';
+                            Newitems[i, j] = 1;
+                            MineCont++;
+                        }
+
                     }
                     else if (data[cont-1] == '[')
                     {
+                        Newitems[i, j] = 2;
+                        DrinkCont++;
                         arrray[i, j] = 'Q';
                         
                     }
@@ -275,17 +306,43 @@ namespace puertos
                     cont++;
                 }
             }
+            int MineNewCont = 0;
+            int DrinkNewCont = 0;
+            int[,] NewMinePos = new int[2,MineCont];
+            int[,] NewDrinkPos = new int[2,DrinkCont];
+            
             for (int i = 0; i < size; i++)
             {
                 for (int j = 0; j < size; j++)
                 {
                     Console.Write(arrray[i, j]);
+                     if (Newitems[i,j] == 1)
+                    {
+                        NewMinePos[0,MineNewCont] = j;
+                        NewMinePos[1,MineNewCont] = i;
+                        MineNewCont++;
+                    }
+                     else if(Newitems[i,j] == 2)
+                    {
+                        NewDrinkPos[0, DrinkNewCont] = j;
+                        NewDrinkPos[1, DrinkNewCont] = i;
+                        DrinkNewCont++;
+                    }
+
                 }
-                Console.WriteLine();
+                Console.Out.WriteLine();
             }
             Board = arrray;
             recorrido = recorridoAux;
+            items = Newitems;
+
+            this.MinePos = NewMinePos;
+            DrinkPos = NewDrinkPos;
+
+            DrinkTotal = DrinkNewCont;
+            MineTotal = MineNewCont;
             
+
 
         }
 

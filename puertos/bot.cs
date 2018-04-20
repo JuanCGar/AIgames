@@ -25,8 +25,8 @@ namespace puertos
         //SI VAS A MOVER ALGO, PRIMERO REVISA QUE ESTAS FUNCIONES ESTEN BIEN, ES POR ESTO QUE AHORITA FALLA A VECES EL CODIGO Y SE CRASHEA EL SERVER
         public bool frontIsClear(char heading)
         {
-            if(heading == 'u')
-                return((server.myHero.pos.x != 0) && server.Board[server.myHero.pos.x - 1,server.myHero.pos.y] != '#');
+            if (heading == 'u')
+                return ((server.myHero.pos.x != 0) && server.Board[server.myHero.pos.x - 1,server.myHero.pos.y] != '#');
             else if(heading == 'd')
                 return ((server.myHero.pos.x != server.boardSize-1) && server.Board[server.myHero.pos.x + 1 , server.myHero.pos.y] != '#');
             else if(heading == 'r')
@@ -320,6 +320,26 @@ namespace puertos
                 int[] spawnPos = new int[2] { spawnX, spawnY };
                 int[] goal = new int[2] { server.boardSize-1, server.boardSize-1 };
                 char heading = 'u';
+
+                int[,] MinePos = server.MinePos;
+                int[,] DrinkPos = server.DrinkPos;
+
+                int MineTotal = server.MineTotal;
+                int DrinkTotal = server.DrinkTotal;
+
+                for(int i = 0; i < MineTotal; i++)
+                {
+                    Console.Out.WriteLine("x: " + MinePos[0,i] + " y: " + MinePos[1,i]);
+
+                }
+                for (int i = 0; i < DrinkTotal; i++)
+                {
+                    Console.Out.WriteLine("x: " + DrinkPos[0, i] + " y: " + DrinkPos[1, i]);
+                }
+
+
+
+                int[,] itemsMap = server.items;
                 //Console.WriteLine("x: " + actualX + " y: " + actualY);
                 //calculateNextMove(actualPos,goal,1);
                 /*
