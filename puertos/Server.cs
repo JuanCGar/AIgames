@@ -43,6 +43,7 @@ namespace puertos
 
         public int[] Mines { get; set; }
         public int[] Drink { get; set; }
+        public int headingNumber { get; set; }
 
 
 

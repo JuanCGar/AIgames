@@ -15,10 +15,13 @@ namespace puertos
         public bot(Server server)
         {
             this.server = server;
+            server.headingNumber = 1;
         }
 
         //the running system
 
+        //EN ESTAS FUNCIONES HAY QUE CHECAR QUE SE ESTEN REVISANDO LAS CASILLAS CORRECTAS
+        //SI VAS A MOVER ALGO, PRIMERO REVISA QUE ESTAS FUNCIONES ESTEN BIEN, ES POR ESTO QUE AHORITA FALLA A VECES EL CODIGO Y SE CRASHEA EL SERVER
         public bool frontIsClear(char heading)
         {
             if(heading == 'u')
@@ -249,6 +252,7 @@ namespace puertos
             }
             else if (/*izquierda*/actualPos[1] == 0 && actualPos[0] != 0)
             {
+                 
 
             }
             else if (/*arriba*/actualPos[1] != 0 && actualPos[0] == 0)
@@ -324,7 +328,7 @@ namespace puertos
                     Console.WriteLine("");
                 }
                 */
-               
+
                 /*
 
                 if (server.Board[actualX+1, actualY] == '$')
@@ -362,11 +366,24 @@ namespace puertos
 
                 }
 */
+                char[] headings = new char[5] { 'u', 'r', 'l', 'd', 's'};
 
-                while(frontIsClear(heading)){
-                    moveTo(heading);
-                }
-                
+                int hn = server.headingNumber;
+                heading = headings[hn];
+
+                    if (frontIsClear(heading))
+                    {
+                        moveTo(heading);
+                    }
+
+                    if (frontIsBlocked(heading))
+                    {
+                    server.headingNumber++;
+                    heading = headings[hn % 5];//se recorre de manera circular el arreglo
+                    }
+
+
+
 
                 /* RANDOM BOT
                
