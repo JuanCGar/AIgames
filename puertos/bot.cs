@@ -23,72 +23,85 @@ namespace puertos
         {
             if(heading == 'u')
             return((server.myHero.pos.y != 0) && server.Board[server.myHero.pos.x, server.myHero.pos.y - 1] != '#');
-            if(heading == 'd')
+            else if(heading == 'd')
                 return ((server.myHero.pos.y != 0) && server.Board[server.myHero.pos.x, server.myHero.pos.y + 1] != '#');
-            if(heading == 'r')
+            else if(heading == 'r')
                 return ((server.myHero.pos.y != 0) && server.Board[server.myHero.pos.x+1, server.myHero.pos.y] != '#');
-            if(heading == 'l')
+            else if(heading == 'l')
                 return ((server.myHero.pos.y != 0) && server.Board[server.myHero.pos.x-1, server.myHero.pos.y ] != '#');
+            else
+                return false;
+            
         }
 
         public bool frontIsBlocked(char heading)
         {
-            if(heading == 'u')
-            return((server.myHero.pos.y == 0) || server.Board[server.myHero.pos.x, server.myHero.pos.y - 1] == '#');
-            if (heading == 'd')
+            if (heading == 'u')
+                return ((server.myHero.pos.y == 0) || server.Board[server.myHero.pos.x, server.myHero.pos.y - 1] == '#');
+            else if (heading == 'd')
                 return ((server.myHero.pos.y == 0) || server.Board[server.myHero.pos.x, server.myHero.pos.y + 1] == '#');
-            if (heading == 'r')
-                return ((server.myHero.pos.y == 0) || server.Board[server.myHero.pos.x+1, server.myHero.pos.y] == '#');
-            if (heading == 'l')
-                return ((server.myHero.pos.y == 0) || server.Board[server.myHero.pos.x-1, server.myHero.pos.y] == '#');
+            else if (heading == 'r')
+                return ((server.myHero.pos.y == 0) || server.Board[server.myHero.pos.x + 1, server.myHero.pos.y] == '#');
+            else if (heading == 'l')
+                return ((server.myHero.pos.y == 0) || server.Board[server.myHero.pos.x - 1, server.myHero.pos.y] == '#');
+            else
+                return false;
         }
 
         public bool rightIsClear(char heading)
         {
-            if(heading == 'u')
-            return ((server.myHero.pos.x != server.Board.Length) && server.Board[server.myHero.pos.x + 1, server.myHero.pos.y] != '#');
-            if (heading == 'd')
+            if (heading == 'u')
+                return ((server.myHero.pos.x != server.Board.Length) && server.Board[server.myHero.pos.x + 1, server.myHero.pos.y] != '#');
+            else if (heading == 'd')
                 return ((server.myHero.pos.x != server.Board.Length) && server.Board[server.myHero.pos.x - 1, server.myHero.pos.y] != '#');
-            if (heading == 'r')
-                return ((server.myHero.pos.x != server.Board.Length) && server.Board[server.myHero.pos.x , server.myHero.pos.y+1] != '#');
-            if (heading == 'l')
-                return ((server.myHero.pos.x != server.Board.Length) && server.Board[server.myHero.pos.x , server.myHero.pos.y-1] != '#');
+            else if (heading == 'r')
+                return ((server.myHero.pos.x != server.Board.Length) && server.Board[server.myHero.pos.x, server.myHero.pos.y + 1] != '#');
+            else if (heading == 'l')
+                return ((server.myHero.pos.x != server.Board.Length) && server.Board[server.myHero.pos.x, server.myHero.pos.y - 1] != '#');
+            else
+                return false;
         }
 
         public bool rightIsBlocked(char heading)
         {
-            if(heading == 'u')
-            return ((server.myHero.pos.x == server.Board.Length) || server.Board[server.myHero.pos.x + 1, server.myHero.pos.y] == '#');
-            if (heading == 'd')
+            if (heading == 'u')
+                return ((server.myHero.pos.x == server.Board.Length) || server.Board[server.myHero.pos.x + 1, server.myHero.pos.y] == '#');
+            else if (heading == 'd')
                 return ((server.myHero.pos.x == server.Board.Length) || server.Board[server.myHero.pos.x - 1, server.myHero.pos.y] == '#');
-            if (heading == 'r')
-                return ((server.myHero.pos.x == server.Board.Length) || server.Board[server.myHero.pos.x, server.myHero.pos.y+1] == '#');
-            if (heading == 'l')
-                return ((server.myHero.pos.x == server.Board.Length) || server.Board[server.myHero.pos.x, server.myHero.pos.y-1] == '#');
+            else if (heading == 'r')
+                return ((server.myHero.pos.x == server.Board.Length) || server.Board[server.myHero.pos.x, server.myHero.pos.y + 1] == '#');
+            else if (heading == 'l')
+                return ((server.myHero.pos.x == server.Board.Length) || server.Board[server.myHero.pos.x, server.myHero.pos.y - 1] == '#');
+            else
+                return false;
         }
 
         public bool leftIsClear(char heading)
         {
-            if(heading == 'u')
-            return ((server.myHero.pos.x != 0) && server.Board[server.myHero.pos.x - 1, server.myHero.pos.y] != '#');
-            if (heading == 'd')
+            if (heading == 'u')
+                return ((server.myHero.pos.x != 0) && server.Board[server.myHero.pos.x - 1, server.myHero.pos.y] != '#');
+            else if (heading == 'd')
                 return ((server.myHero.pos.x != 0) && server.Board[server.myHero.pos.x + 1, server.myHero.pos.y] != '#');
-            if (heading == 'r')
-                return ((server.myHero.pos.x != 0) && server.Board[server.myHero.pos.x , server.myHero.pos.y-1] != '#');
-            if (heading == 'l')
-                return ((server.myHero.pos.x != 0) && server.Board[server.myHero.pos.x , server.myHero.pos.y+1] != '#');
+            else if (heading == 'r')
+                return ((server.myHero.pos.x != 0) && server.Board[server.myHero.pos.x, server.myHero.pos.y - 1] != '#');
+            else if (heading == 'l')
+                return ((server.myHero.pos.x != 0) && server.Board[server.myHero.pos.x, server.myHero.pos.y + 1] != '#');
+            else
+                return false;
         }
 
         public bool leftIsBlocked(char heading)
         {
-            if(heading == 'u')
-            return ((server.myHero.pos.x == 0) || server.Board[server.myHero.pos.x - 1, server.myHero.pos.y] == '#');
-            if (heading == 'd')
+            if (heading == 'u')
+                return ((server.myHero.pos.x == 0) || server.Board[server.myHero.pos.x - 1, server.myHero.pos.y] == '#');
+            else if (heading == 'd')
                 return ((server.myHero.pos.x == 0) || server.Board[server.myHero.pos.x + 1, server.myHero.pos.y] == '#');
-            if (heading == 'r')
-                return ((server.myHero.pos.x == 0) || server.Board[server.myHero.pos.x, server.myHero.pos.y-1] == '#');
-            if (heading == 'l')
-                return ((server.myHero.pos.x == 0) || server.Board[server.myHero.pos.x, server.myHero.pos.y+1] == '#');
+            else if (heading == 'r')
+                return ((server.myHero.pos.x == 0) || server.Board[server.myHero.pos.x, server.myHero.pos.y - 1] == '#');
+            else if (heading == 'l')
+                return ((server.myHero.pos.x == 0) || server.Board[server.myHero.pos.x, server.myHero.pos.y + 1] == '#');
+            else
+                return false;
         }
 
         public bool nextToABeer(){
@@ -116,6 +129,8 @@ namespace puertos
                     return 'r';
                 if (server.Board[server.myHero.pos.x - 1, server.myHero.pos.y] != '[' || server.Board[server.myHero.pos.x, server.myHero.pos.y + 1] != ']')
                     return 'l';
+            }else{
+                return 'n';
             }
         }
 
@@ -145,6 +160,8 @@ namespace puertos
                     return 'r';
                 else if (server.Board[server.myHero.pos.x - 1, server.myHero.pos.y] != '$')
                     return 'l';
+            }else{
+                return 'n';
             }
         }
 
