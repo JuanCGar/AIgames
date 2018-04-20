@@ -26,50 +26,66 @@ namespace puertos
         public bool frontIsClear(char heading)
         {
             if (heading == 'u')
-
-                return ((server.myHero.pos.x != 0) && server.Board[server.myHero.pos.x - 1,server.myHero.pos.y] != '#');
-
             {
-                if (server.myHero.pos.x == 0)
+
+                //<<<<<<< HEAD
+                return ((server.myHero.pos.x != 0) && server.Board[server.myHero.pos.x - 1, server.myHero.pos.y] != '#');
+                //=======
+
                 {
-                    return false;
+                    if (server.myHero.pos.x == 0)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        return server.Board[server.myHero.pos.x - 1, server.myHero.pos.y] != '#';
+                    }
                 }
-                else
-                {
-                    return server.Board[server.myHero.pos.x - 1, server.myHero.pos.y] != '#';
-                }
-            }
+
                 //return((server.myHero.pos.x != 0) || server.Board[server.myHero.pos.x - 1,server.myHero.pos.y] != '#');
-
-            else if(heading == 'd')
-            if(server.myHero.pos.x == server.boardSize-1)
+                //>>>>>>> 36eaf25f53d3df4eeb06c30a9173b5f1945e5ffc
+            }
+            else if (heading == 'd')
             {
+                if (server.myHero.pos.x == server.boardSize - 1)
+                {
                     return false;
-            }
-            else
-            {
-                    return server.Board[server.myHero.pos.x + 1, server.myHero.pos.y] != '#';
-            }
-                //return ((server.myHero.pos.x != server.boardSize-1) || server.Board[server.myHero.pos.x + 1 , server.myHero.pos.y] != '#');
-            else if (heading == 'r')
-            if(server.myHero.pos.y == server.boardSize-1){
-                    return false;
-            }
-            else{
-                    return server.Board[server.myHero.pos.x, server.myHero.pos.y+1]!='#';
-            }
-               // return ((server.myHero.pos.y != server.boardSize - 1) || server.Board[server.myHero.pos.x, server.myHero.pos.y + 1] != '#');
-            else if (heading == 'l')
-            if((server.myHero.pos.y == 0)){
-                    return false;
-            }
+                }
                 else
-            {
-                    return server.Board[server.myHero.pos.x, server.myHero.pos.y - 1] != '#';
+                {
+                    return server.Board[server.myHero.pos.x + 1, server.myHero.pos.y] != '#';
+                }
+                //return ((server.myHero.pos.x != server.boardSize-1) || server.Board[server.myHero.pos.x + 1 , server.myHero.pos.y] != '#');
             }
+            else if (heading == 'r')
+            {
+                if (server.myHero.pos.y == server.boardSize - 1)
+                {
+                    return false;
+                }
+                else
+                {
+                    return server.Board[server.myHero.pos.x, server.myHero.pos.y + 1] != '#';
+                }
+                // return ((server.myHero.pos.y != server.boardSize - 1) || server.Board[server.myHero.pos.x, server.myHero.pos.y + 1] != '#');
+            }
+            else if (heading == 'l')
+            {
+                if ((server.myHero.pos.y == 0))
+                {
+                    return false;
+                }
+                else
+                {
+                    return server.Board[server.myHero.pos.x, server.myHero.pos.y - 1] != '#';
+                }
                 //return ((server.myHero.pos.y != 0) || server.Board[server.myHero.pos.x, server.myHero.pos.y - 1] != '#');
+            }
             else
+            {
                 return false;
+            }
         }
 
         public bool frontIsBlocked(char heading)
@@ -354,12 +370,12 @@ namespace puertos
 
                 for(int i = 0; i < MineTotal; i++)
                 {
-                    Console.Out.WriteLine("x: " + MinePos[0,i] + " y: " + MinePos[1,i]);
+                  //  Console.Out.WriteLine("x: " + MinePos[0,i] + " y: " + MinePos[1,i]);
 
                 }
                 for (int i = 0; i < DrinkTotal; i++)
                 {
-                    Console.Out.WriteLine("x: " + DrinkPos[0, i] + " y: " + DrinkPos[1, i]);
+                   // Console.Out.WriteLine("x: " + DrinkPos[0, i] + " y: " + DrinkPos[1, i]);
                 }
 
 
@@ -422,25 +438,35 @@ namespace puertos
                 else
                     heading = headings[(hn-1) % 5];
 
-                    if (frontIsClear(heading))
-                    {
-                        moveTo(heading);
+                if (frontIsClear(heading))
+                {
+                    moveTo(heading);
                     Console.WriteLine("heading: " + heading);
 
 
 
-                    Console.WriteLine("("+server.myHero.pos.x + ","+server.myHero.pos.y+")");
-                }else
-                    {
-                    while (!frontIsClear(headings[(server.headingNumber) % 5]))
+                    Console.WriteLine("(" + server.myHero.pos.x + "," + server.myHero.pos.y + ")");
+                }
+                else
+                {
+                    Console.WriteLine(headings[(server.headingNumber+1) % 5]);
+                    while (!frontIsClear(headings[(server.headingNumber+1) % 5]))
                     {
                         server.headingNumber = server.headingNumber + 1;
                         hn = server.headingNumber;
                         Console.WriteLine("correct heading to: " + headings[server.headingNumber % 5]);
                     }
-
-                    heading = headings[((hn-1) % 5)];//se recorre de manera circular el arreglo
+                    //Console.WriteLine("si estoy entrando");
+                    if (hn == 0)
+                    {
+                        heading = headings[hn % 5];
                     }
+                    else
+                    {
+                        heading = headings[((hn - 1) % 5)];//se recorre de manera circular el arreglo
+
+                    }
+                }
 
                 Console.Write("Front Is");
                 Console.WriteLine(frontIsClear(heading) ? " clear" : " blocked");
