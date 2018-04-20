@@ -48,9 +48,22 @@ namespace puertos
             }
                 //return ((server.myHero.pos.x != server.boardSize-1) || server.Board[server.myHero.pos.x + 1 , server.myHero.pos.y] != '#');
             else if (heading == 'r')
-                return ((server.myHero.pos.y != server.boardSize - 1) || server.Board[server.myHero.pos.x, server.myHero.pos.y + 1] != '#');
+            if(server.myHero.pos.y == server.boardSize-1){
+                    return false;
+            }
+            else{
+                    return server.Board[server.myHero.pos.x, server.myHero.pos.y+1]!='#';
+            }
+               // return ((server.myHero.pos.y != server.boardSize - 1) || server.Board[server.myHero.pos.x, server.myHero.pos.y + 1] != '#');
             else if (heading == 'l')
-                return ((server.myHero.pos.y != 0) || server.Board[server.myHero.pos.x, server.myHero.pos.y - 1] != '#');
+            if((server.myHero.pos.y == 0)){
+                    return false;
+            }
+                else
+            {
+                    return server.Board[server.myHero.pos.x, server.myHero.pos.y - 1] != '#';
+            }
+                //return ((server.myHero.pos.y != 0) || server.Board[server.myHero.pos.x, server.myHero.pos.y - 1] != '#');
             else
                 return false;
         }
@@ -380,7 +393,10 @@ namespace puertos
                 char[] headings = new char[5] { 'u', 'r', 'l', 'd', 's'};
 
                 int hn = server.headingNumber;
-                heading = headings[hn];
+                if (hn > 0)
+                    heading = headings[(hn) % 5];
+                else
+                    heading = headings[(hn - 1) % 5];
 
                     if (frontIsClear(heading))
                     {
@@ -399,7 +415,7 @@ namespace puertos
                         Console.WriteLine("correct heading to: " + headings[server.headingNumber % 5]);
                     }
 
-                    heading = headings[(hn % 5)-1];//se recorre de manera circular el arreglo
+                    heading = headings[((hn-1) % 5)];//se recorre de manera circular el arreglo
                     }
 
                 Console.Write("Front Is");
