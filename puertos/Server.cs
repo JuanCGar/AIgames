@@ -26,9 +26,9 @@ namespace puertos
 
         public hero myHero { get; set; }
         public List<hero> heroes;
-       
+
         public bool error { get; set; } = false;
-        
+
 
         public int currentTurn { get; private set; }
         public int maxTurns { get; private set; }
@@ -36,23 +36,19 @@ namespace puertos
         public bool errored { get; private set; }
         public string errorText { get; private set; }
         private string serverURL;
-        public char[,] Board { get;set; }
+        public char[,] Board { get; set; }
+        public List<int> taverns;
+        public List<Mina> minas;
+        public Mina mina { get; set;}
 
-        public int[] Mines { get; set; }
-        public int[] Drink { get; set; }
-
-        private void Search(char[,] board)
-        {
-            for(int i = 0; i)
-
-        }
-
+        public int[]Mina { get; set; }
 
         public Server(string url, string key, string mode = "training", uint turns = 0, string map = null)
         {
             serverURL = url;
             this.key = key;
             this.mode = mode;
+
             if (mode == "training")
             {
                 this.map = map;
@@ -95,7 +91,7 @@ namespace puertos
                 dataStream.Write(byteArray, 0, byteArray.Length);
                 // Se cierra stream
                 dataStream.Close();
-
+                
                 // Recibe la respuesta
                 WebResponse response = request.GetResponse();
 
@@ -140,8 +136,7 @@ namespace puertos
             currentTurn = gameResponse.game.turns;
             maxTurns = gameResponse.game.maxTurns;
             finished = gameResponse.game.finished;
-            CrearTablero(gameResponse.game.board.size, gameResponse.game.board.tiles, Board);
-
+            CrearTablero(gameResponse.game.board.size, gameResponse.game.board.tiles, Board, Mina);
 
 
         }
@@ -181,10 +176,11 @@ namespace puertos
 
         }
 
-        private void CrearTablero(int size,string data, char[,] board)
+        private void CrearTablero(int size,string data, char[,] board, int[] Minas)
         {
             
             int cont  = 0;
+            int contMina = 0;
             char[,] arrray = new char[size, size];
 
             for (int i = 0; i < size; i++) 
@@ -219,7 +215,12 @@ namespace puertos
                     }
                     else if (data[cont-1] == '$')
                     {
-                        
+                        this.Mina[0] = i;
+                        contMina++;
+
+                        //A-D minas de alguien
+                        //$ Mina neutral
+                        // Q taverna
                          if(data[cont] == '1' && myHero.id != 1)
                         {
                             arrray[i, j] = 'A';
@@ -282,6 +283,29 @@ namespace puertos
         }
 
        
+    }
+
+    public class Mina
+    {
+        public char cTipo;
+
+        public Mina(char cTipo)
+        {
+            this.cTipo = cTipo;
+        }
+
+        public void setTipo(char cTipo)
+        {
+            this.cTipo = cTipo;
+        }
+
+        public char getTipo()
+        {
+            return cTipo;
+        }
+
+       
+
     }
 }
 

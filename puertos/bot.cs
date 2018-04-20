@@ -37,11 +37,16 @@ namespace puertos
                 int xo = server.myHero.pos.y+1;
                 int yo = server.myHero.pos.x+1;
 
-                
-
                 int xi = server.myHero.spawnPos.x;
                 int yi = server.myHero.spawnPos.y;
 
+                int x = server.Mina[0];
+
+
+
+
+                Console.Out.WriteLine("Minas en x: " + x);
+                
                 
                 if (server.Board[xo+1, yo] == '$')
                     server.moveHero(Direction.West);
