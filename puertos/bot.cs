@@ -21,10 +21,10 @@ namespace puertos
 
         public void calculateNextMove(int[] actualPos, int[] goalPos, int numeracionInicial){
            
-            int[,] numeracion = new int[server.recorrido.Length,server.recorrido.Length];
+            int[,] numeracion = new int[server.boardSize,server.boardSize];
             int numeracionActual = numeracionInicial;
             numeracion[goalPos[0], goalPos[1]] = numeracionInicial;
-            int[] modPos = new int[2]{goalPos[0], goalPos[1]};
+            int[] modPos = new int[2]{goalPos[0]-1, goalPos[1]-1};
             if (actualPos[0] != goalPos[0] && actualPos[1] != goalPos[1])
             {
                 recursiveNextNumber(numeracion, ref numeracionActual, actualPos, goalPos, modPos);
@@ -134,7 +134,7 @@ namespace puertos
             {
                 //posiciones actuales de myheroe
 
-                int numeracionLength = server.boardSize;
+                //int numeracionLength = server.boardSize;
 
                 int goalX;
                 int goalY;
@@ -151,11 +151,11 @@ namespace puertos
                 int spawnY = server.myHero.spawnPos.y;
 
                 int[] spawnPos = new int[2] { spawnX, spawnY };
-                int[] goal = new int[2] { numeracionLength, numeracionLength };
+                int[] goal = new int[2] { server.boardSize-1, server.boardSize-1 };
                 //Console.WriteLine("x: " + actualX + " y: " + actualY);
                 calculateNextMove(actualPos,goal,1);
-                for (int i = 0; i < numeracionLength; i++){
-                    for (int j = 0; j < numeracionLength; j++){
+                for (int i = 0; i < server.boardSize; i++){
+                    for (int j = 0; j < server.boardSize; j++){
                         Console.Write(server.numeracion[i,j]);
                         Console.Write(" ");
                     }
@@ -163,7 +163,7 @@ namespace puertos
                 }
                
 
-                /*
+
                 if (server.Board[actualX+1, actualY] == '$')
                     server.moveHero(Direction.West);
                 else if (server.Board[actualX -1, actualY] == '$' && actualX > 0)
@@ -199,7 +199,7 @@ namespace puertos
 
                 }
                 
-                */
+
                 /* RANDOM BOT
                
                 }*/
