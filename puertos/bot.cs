@@ -19,6 +19,135 @@ namespace puertos
 
         //the running system
 
+        public bool frontIsClear(char heading)
+        {
+            if(heading == 'u')
+            return((server.myHero.pos.y != 0) && server.Board[server.myHero.pos.x, server.myHero.pos.y - 1] != '#');
+            if(heading == 'd')
+                return ((server.myHero.pos.y != 0) && server.Board[server.myHero.pos.x, server.myHero.pos.y + 1] != '#');
+            if(heading == 'r')
+                return ((server.myHero.pos.y != 0) && server.Board[server.myHero.pos.x+1, server.myHero.pos.y] != '#');
+            if(heading == 'l')
+                return ((server.myHero.pos.y != 0) && server.Board[server.myHero.pos.x-1, server.myHero.pos.y ] != '#');
+        }
+
+        public bool frontIsBlocked(char heading)
+        {
+            if(heading == 'u')
+            return((server.myHero.pos.y == 0) || server.Board[server.myHero.pos.x, server.myHero.pos.y - 1] == '#');
+            if (heading == 'd')
+                return ((server.myHero.pos.y == 0) || server.Board[server.myHero.pos.x, server.myHero.pos.y + 1] == '#');
+            if (heading == 'r')
+                return ((server.myHero.pos.y == 0) || server.Board[server.myHero.pos.x+1, server.myHero.pos.y] == '#');
+            if (heading == 'l')
+                return ((server.myHero.pos.y == 0) || server.Board[server.myHero.pos.x-1, server.myHero.pos.y] == '#');
+        }
+
+        public bool rightIsClear(char heading)
+        {
+            if(heading == 'u')
+            return ((server.myHero.pos.x != server.Board.Length) && server.Board[server.myHero.pos.x + 1, server.myHero.pos.y] != '#');
+            if (heading == 'd')
+                return ((server.myHero.pos.x != server.Board.Length) && server.Board[server.myHero.pos.x - 1, server.myHero.pos.y] != '#');
+            if (heading == 'r')
+                return ((server.myHero.pos.x != server.Board.Length) && server.Board[server.myHero.pos.x , server.myHero.pos.y+1] != '#');
+            if (heading == 'l')
+                return ((server.myHero.pos.x != server.Board.Length) && server.Board[server.myHero.pos.x , server.myHero.pos.y-1] != '#');
+        }
+
+        public bool rightIsBlocked(char heading)
+        {
+            if(heading == 'u')
+            return ((server.myHero.pos.x == server.Board.Length) || server.Board[server.myHero.pos.x + 1, server.myHero.pos.y] == '#');
+            if (heading == 'd')
+                return ((server.myHero.pos.x == server.Board.Length) || server.Board[server.myHero.pos.x - 1, server.myHero.pos.y] == '#');
+            if (heading == 'r')
+                return ((server.myHero.pos.x == server.Board.Length) || server.Board[server.myHero.pos.x, server.myHero.pos.y+1] == '#');
+            if (heading == 'l')
+                return ((server.myHero.pos.x == server.Board.Length) || server.Board[server.myHero.pos.x, server.myHero.pos.y-1] == '#');
+        }
+
+        public bool leftIsClear(char heading)
+        {
+            if(heading == 'u')
+            return ((server.myHero.pos.x != 0) && server.Board[server.myHero.pos.x - 1, server.myHero.pos.y] != '#');
+            if (heading == 'd')
+                return ((server.myHero.pos.x != 0) && server.Board[server.myHero.pos.x + 1, server.myHero.pos.y] != '#');
+            if (heading == 'r')
+                return ((server.myHero.pos.x != 0) && server.Board[server.myHero.pos.x , server.myHero.pos.y-1] != '#');
+            if (heading == 'l')
+                return ((server.myHero.pos.x != 0) && server.Board[server.myHero.pos.x , server.myHero.pos.y+1] != '#');
+        }
+
+        public bool leftIsBlocked(char heading)
+        {
+            if(heading == 'u')
+            return ((server.myHero.pos.x == 0) || server.Board[server.myHero.pos.x - 1, server.myHero.pos.y] == '#');
+            if (heading == 'd')
+                return ((server.myHero.pos.x == 0) || server.Board[server.myHero.pos.x + 1, server.myHero.pos.y] == '#');
+            if (heading == 'r')
+                return ((server.myHero.pos.x == 0) || server.Board[server.myHero.pos.x, server.myHero.pos.y-1] == '#');
+            if (heading == 'l')
+                return ((server.myHero.pos.x == 0) || server.Board[server.myHero.pos.x, server.myHero.pos.y+1] == '#');
+        }
+
+        public bool nextToABeer(){
+            if (server.Board[server.myHero.pos.x, server.myHero.pos.y + 1] != '[' || server.Board[server.myHero.pos.x, server.myHero.pos.y + 1] != ']')
+                return true;
+            else if (server.Board[server.myHero.pos.x, server.myHero.pos.y - 1] != '[' || server.Board[server.myHero.pos.x, server.myHero.pos.y + 1] != ']')
+                return true;
+            else if (server.Board[server.myHero.pos.x + 1, server.myHero.pos.y] != '[' || server.Board[server.myHero.pos.x, server.myHero.pos.y + 1] != ']')
+                return true;
+            else if (server.Board[server.myHero.pos.x - 1, server.myHero.pos.y] != '[' || server.Board[server.myHero.pos.x, server.myHero.pos.y + 1] != ']')
+                return true;
+            else
+                return false;
+        }
+
+        public char nextToABeer(bool t)
+        {
+            if (t)
+            {
+                if (server.Board[server.myHero.pos.x, server.myHero.pos.y + 1] != '[' || server.Board[server.myHero.pos.x, server.myHero.pos.y + 1] != ']')
+                    return 'd';
+                if (server.Board[server.myHero.pos.x, server.myHero.pos.y - 1] != '[' || server.Board[server.myHero.pos.x, server.myHero.pos.y + 1] != ']')
+                    return 'u';
+                if (server.Board[server.myHero.pos.x + 1, server.myHero.pos.y] != '[' || server.Board[server.myHero.pos.x, server.myHero.pos.y + 1] != ']')
+                    return 'r';
+                if (server.Board[server.myHero.pos.x - 1, server.myHero.pos.y] != '[' || server.Board[server.myHero.pos.x, server.myHero.pos.y + 1] != ']')
+                    return 'l';
+            }
+        }
+
+        public bool nextToGold()
+        {
+            if (server.Board[server.myHero.pos.x, server.myHero.pos.y + 1] != '$')
+                return true;
+            else if (server.Board[server.myHero.pos.x, server.myHero.pos.y - 1] != '$')
+                return true;
+            else if (server.Board[server.myHero.pos.x + 1, server.myHero.pos.y] != '$')
+                return true;
+            else if (server.Board[server.myHero.pos.x - 1, server.myHero.pos.y] != '$')
+                return true;
+            else
+                return false;
+        }
+
+        public char nextToGold(bool t)
+        {
+            if (t)
+            {
+                if (server.Board[server.myHero.pos.x, server.myHero.pos.y + 1] != '$')
+                    return 'u';
+                else if (server.Board[server.myHero.pos.x, server.myHero.pos.y - 1] != '$')
+                    return 'd';
+                else if (server.Board[server.myHero.pos.x + 1, server.myHero.pos.y] != '$')
+                    return 'r';
+                else if (server.Board[server.myHero.pos.x - 1, server.myHero.pos.y] != '$')
+                    return 'l';
+            }
+        }
+
         public void calculateNextMove(int[] actualPos, int[] goalPos, int numeracionInicial){
            
             int[,] numeracion = new int[server.boardSize,server.boardSize];
@@ -153,7 +282,8 @@ namespace puertos
                 int[] spawnPos = new int[2] { spawnX, spawnY };
                 int[] goal = new int[2] { server.boardSize-1, server.boardSize-1 };
                 //Console.WriteLine("x: " + actualX + " y: " + actualY);
-                calculateNextMove(actualPos,goal,1);
+                //calculateNextMove(actualPos,goal,1);
+                /*
                 for (int i = 0; i < server.boardSize; i++){
                     for (int j = 0; j < server.boardSize; j++){
                         Console.Write(server.numeracion[i,j]);
@@ -161,6 +291,7 @@ namespace puertos
                     }
                     Console.WriteLine("");
                 }
+                */
                
 
 
@@ -198,6 +329,9 @@ namespace puertos
 
 
                 }
+
+
+
                 
 
                 /* RANDOM BOT
