@@ -15,7 +15,8 @@ namespace puertos
         public bot(Server server)
         {
             this.server = server;
-            server.headingNumber = 1;
+            server.headingNumber = 0;
+
         }
 
         //the running system
@@ -25,13 +26,13 @@ namespace puertos
         public bool frontIsClear(char heading)
         {
             if(heading == 'u')
-            return((server.myHero.pos.y != 0) && server.Board[server.myHero.pos.x, server.myHero.pos.y - 1] != '#');
+                return((server.myHero.pos.y != 0) && server.Board[server.myHero.pos.y - 1,server.myHero.pos.x] != '#');
             else if(heading == 'd')
-                return ((server.myHero.pos.y != 0) && server.Board[server.myHero.pos.x, server.myHero.pos.y + 1] != '#');
+                return ((server.myHero.pos.y != server.boardSize-1) && server.Board[server.myHero.pos.y + 1 , server.myHero.pos.x] != '#');
             else if(heading == 'r')
-                return ((server.myHero.pos.y != 0) && server.Board[server.myHero.pos.x+1, server.myHero.pos.y] != '#');
+                return ((server.myHero.pos.x != server.boardSize-1) && server.Board[server.myHero.pos.y , server.myHero.pos.x + 1] != '#');
             else if(heading == 'l')
-                return ((server.myHero.pos.y != 0) && server.Board[server.myHero.pos.x-1, server.myHero.pos.y ] != '#');
+                return ((server.myHero.pos.x != 0) && server.Board[server.myHero.pos.y , server.myHero.pos.x - 1] != '#');
             else
                 return false;
             
@@ -40,13 +41,13 @@ namespace puertos
         public bool frontIsBlocked(char heading)
         {
             if (heading == 'u')
-                return ((server.myHero.pos.y == 0) || server.Board[server.myHero.pos.x, server.myHero.pos.y - 1] == '#');
+                return ((server.myHero.pos.y == 0) || server.Board[server.myHero.pos.y - 1 , server.myHero.pos.x] == '#');
             else if (heading == 'd')
-                return ((server.myHero.pos.y == 0) || server.Board[server.myHero.pos.x, server.myHero.pos.y + 1] == '#');
+                return ((server.myHero.pos.y == 0) || server.Board[server.myHero.pos.y + 1 , server.myHero.pos.x] == '#');
             else if (heading == 'r')
-                return ((server.myHero.pos.y == 0) || server.Board[server.myHero.pos.x + 1, server.myHero.pos.y] == '#');
+                return ((server.myHero.pos.y == 0) || server.Board[server.myHero.pos.y , server.myHero.pos.x + 1] == '#');
             else if (heading == 'l')
-                return ((server.myHero.pos.y == 0) || server.Board[server.myHero.pos.x - 1, server.myHero.pos.y] == '#');
+                return ((server.myHero.pos.y == 0) || server.Board[server.myHero.pos.y , server.myHero.pos.x - 1] == '#');
             else
                 return false;
         }
@@ -54,13 +55,13 @@ namespace puertos
         public bool rightIsClear(char heading)
         {
             if (heading == 'u')
-                return ((server.myHero.pos.x != server.Board.Length) && server.Board[server.myHero.pos.x + 1, server.myHero.pos.y] != '#');
+                return ((server.myHero.pos.x != server.Board.Length) && server.Board[server.myHero.pos.y , server.myHero.pos.x + 1] != '#');
             else if (heading == 'd')
-                return ((server.myHero.pos.x != server.Board.Length) && server.Board[server.myHero.pos.x - 1, server.myHero.pos.y] != '#');
+                return ((server.myHero.pos.x != server.Board.Length) && server.Board[server.myHero.pos.y , server.myHero.pos.x - 1] != '#');
             else if (heading == 'r')
-                return ((server.myHero.pos.x != server.Board.Length) && server.Board[server.myHero.pos.x, server.myHero.pos.y + 1] != '#');
+                return ((server.myHero.pos.x != server.Board.Length) && server.Board[server.myHero.pos.y + 1 , server.myHero.pos.x] != '#');
             else if (heading == 'l')
-                return ((server.myHero.pos.x != server.Board.Length) && server.Board[server.myHero.pos.x, server.myHero.pos.y - 1] != '#');
+                return ((server.myHero.pos.x != server.Board.Length) && server.Board[server.myHero.pos.y - 1 , server.myHero.pos.x] != '#');
             else
                 return false;
         }
@@ -68,13 +69,13 @@ namespace puertos
         public bool rightIsBlocked(char heading)
         {
             if (heading == 'u')
-                return ((server.myHero.pos.x == server.Board.Length) || server.Board[server.myHero.pos.x + 1, server.myHero.pos.y] == '#');
+                return ((server.myHero.pos.x == server.Board.Length) || server.Board[server.myHero.pos.y , server.myHero.pos.x + 1] == '#');
             else if (heading == 'd')
-                return ((server.myHero.pos.x == server.Board.Length) || server.Board[server.myHero.pos.x - 1, server.myHero.pos.y] == '#');
+                return ((server.myHero.pos.x == server.Board.Length) || server.Board[server.myHero.pos.y , server.myHero.pos.x - 1] == '#');
             else if (heading == 'r')
-                return ((server.myHero.pos.x == server.Board.Length) || server.Board[server.myHero.pos.x, server.myHero.pos.y + 1] == '#');
+                return ((server.myHero.pos.x == server.Board.Length) || server.Board[server.myHero.pos.y + 1 , server.myHero.pos.x] == '#');
             else if (heading == 'l')
-                return ((server.myHero.pos.x == server.Board.Length) || server.Board[server.myHero.pos.x, server.myHero.pos.y - 1] == '#');
+                return ((server.myHero.pos.x == server.Board.Length) || server.Board[server.myHero.pos.y - 1 , server.myHero.pos.x] == '#');
             else
                 return false;
         }
@@ -82,13 +83,13 @@ namespace puertos
         public bool leftIsClear(char heading)
         {
             if (heading == 'u')
-                return ((server.myHero.pos.x != 0) && server.Board[server.myHero.pos.x - 1, server.myHero.pos.y] != '#');
+                return ((server.myHero.pos.x != 0) && server.Board[server.myHero.pos.y , server.myHero.pos.x - 1] != '#');
             else if (heading == 'd')
-                return ((server.myHero.pos.x != 0) && server.Board[server.myHero.pos.x + 1, server.myHero.pos.y] != '#');
+                return ((server.myHero.pos.x != 0) && server.Board[server.myHero.pos.y , server.myHero.pos.x + 1] != '#');
             else if (heading == 'r')
-                return ((server.myHero.pos.x != 0) && server.Board[server.myHero.pos.x, server.myHero.pos.y - 1] != '#');
+                return ((server.myHero.pos.x != 0) && server.Board[server.myHero.pos.y - 1 , server.myHero.pos.x] != '#');
             else if (heading == 'l')
-                return ((server.myHero.pos.x != 0) && server.Board[server.myHero.pos.x, server.myHero.pos.y + 1] != '#');
+                return ((server.myHero.pos.x != 0) && server.Board[server.myHero.pos.y + 1 , server.myHero.pos.x] != '#');
             else
                 return false;
         }
@@ -96,25 +97,25 @@ namespace puertos
         public bool leftIsBlocked(char heading)
         {
             if (heading == 'u')
-                return ((server.myHero.pos.x == 0) || server.Board[server.myHero.pos.x - 1, server.myHero.pos.y] == '#');
+                return ((server.myHero.pos.x == 0) || server.Board[server.myHero.pos.y , server.myHero.pos.x - 1] == '#');
             else if (heading == 'd')
-                return ((server.myHero.pos.x == 0) || server.Board[server.myHero.pos.x + 1, server.myHero.pos.y] == '#');
+                return ((server.myHero.pos.x == 0) || server.Board[server.myHero.pos.y , server.myHero.pos.x + 1] == '#');
             else if (heading == 'r')
-                return ((server.myHero.pos.x == 0) || server.Board[server.myHero.pos.x, server.myHero.pos.y - 1] == '#');
+                return ((server.myHero.pos.x == 0) || server.Board[server.myHero.pos.y - 1 , server.myHero.pos.x] == '#');
             else if (heading == 'l')
-                return ((server.myHero.pos.x == 0) || server.Board[server.myHero.pos.x, server.myHero.pos.y + 1] == '#');
+                return ((server.myHero.pos.x == 0) || server.Board[server.myHero.pos.y + 1 , server.myHero.pos.x] == '#');
             else
                 return false;
         }
 
-        public bool nextToABeer(){
-            if (server.Board[server.myHero.pos.x, server.myHero.pos.y + 1] != '[' || server.Board[server.myHero.pos.x, server.myHero.pos.y + 1] != ']')
+        public bool nextToABeer(){ //checar cual es el signo que representa las tabernas porque evidentemente [] no es
+            if (server.Board[server.myHero.pos.y + 1 , server.myHero.pos.x] != '[')
                 return true;
-            else if (server.Board[server.myHero.pos.x, server.myHero.pos.y - 1] != '[' || server.Board[server.myHero.pos.x, server.myHero.pos.y + 1] != ']')
+            else if (server.Board[server.myHero.pos.y - 1 , server.myHero.pos.x] != '[')
+                return true; 
+            else if (server.Board[server.myHero.pos.y , server.myHero.pos.x + 1] != '[')
                 return true;
-            else if (server.Board[server.myHero.pos.x + 1, server.myHero.pos.y] != '[' || server.Board[server.myHero.pos.x, server.myHero.pos.y + 1] != ']')
-                return true;
-            else if (server.Board[server.myHero.pos.x - 1, server.myHero.pos.y] != '[' || server.Board[server.myHero.pos.x, server.myHero.pos.y + 1] != ']')
+            else if (server.Board[server.myHero.pos.y , server.myHero.pos.x - 1] != '[')
                 return true;
             else
                 return false;
@@ -124,13 +125,13 @@ namespace puertos
         {
             if (t)
             {
-                if (server.Board[server.myHero.pos.x, server.myHero.pos.y + 1] != '[' || server.Board[server.myHero.pos.x, server.myHero.pos.y + 1] != ']')
+                if (server.Board[server.myHero.pos.y + 1 , server.myHero.pos.x] != '[')
                     return 'd';
-                if (server.Board[server.myHero.pos.x, server.myHero.pos.y - 1] != '[' || server.Board[server.myHero.pos.x, server.myHero.pos.y + 1] != ']')
+                if (server.Board[server.myHero.pos.y - 1 , server.myHero.pos.x] != '[')
                     return 'u';
-                if (server.Board[server.myHero.pos.x + 1, server.myHero.pos.y] != '[' || server.Board[server.myHero.pos.x, server.myHero.pos.y + 1] != ']')
+                if (server.Board[server.myHero.pos.y , server.myHero.pos.x + 1] != '[')
                     return 'r';
-                if (server.Board[server.myHero.pos.x - 1, server.myHero.pos.y] != '[' || server.Board[server.myHero.pos.x, server.myHero.pos.y + 1] != ']')
+                if (server.Board[server.myHero.pos.y , server.myHero.pos.x - 1] != '[')
                     return 'l';
             }
 
@@ -140,13 +141,13 @@ namespace puertos
 
         public bool nextToGold()
         {
-            if (server.Board[server.myHero.pos.x, server.myHero.pos.y + 1] != '$')
+            if (server.Board[server.myHero.pos.y + 1 , server.myHero.pos.x] != '$')
                 return true;
-            else if (server.Board[server.myHero.pos.x, server.myHero.pos.y - 1] != '$')
+            else if (server.Board[server.myHero.pos.y - 1 , server.myHero.pos.x] != '$')
                 return true;
-            else if (server.Board[server.myHero.pos.x + 1, server.myHero.pos.y] != '$')
+            else if (server.Board[server.myHero.pos.y , server.myHero.pos.x + 1] != '$')
                 return true;
-            else if (server.Board[server.myHero.pos.x - 1, server.myHero.pos.y] != '$')
+            else if (server.Board[server.myHero.pos.y , server.myHero.pos.x - 1] != '$')
                 return true;
             else
                 return false;
@@ -156,13 +157,13 @@ namespace puertos
         {
             if (t)
             {
-                if (server.Board[server.myHero.pos.x, server.myHero.pos.y + 1] != '$')
+                if (server.Board[server.myHero.pos.y + 1, server.myHero.pos.x] != '$')
                     return 'u';
-                else if (server.Board[server.myHero.pos.x, server.myHero.pos.y - 1] != '$')
+                else if (server.Board[server.myHero.pos.y - 1, server.myHero.pos.x] != '$')
                     return 'd';
-                else if (server.Board[server.myHero.pos.x + 1, server.myHero.pos.y] != '$')
+                else if (server.Board[server.myHero.pos.y, server.myHero.pos.x + 1] != '$')
                     return 'r';
-                else if (server.Board[server.myHero.pos.x - 1, server.myHero.pos.y] != '$')
+                else if (server.Board[server.myHero.pos.y, server.myHero.pos.x - 1] != '$')
                     return 'l';
             }
                 return 'n';
@@ -266,7 +267,6 @@ namespace puertos
             else if (actualPos[1] !=0 && actualPos[0] !=0){
                 
             }
-
         }
 
         public void moveTo(char heading){
@@ -275,9 +275,9 @@ namespace puertos
             if (heading == 'd')
                 server.moveHero(Direction.South);
             if (heading == 'r')
-                server.moveHero(Direction.East);
-            if (heading == 'l')
                 server.moveHero(Direction.West);
+            if (heading == 'l')
+                server.moveHero(Direction.East);
             if (heading == 's')
                 server.moveHero(Direction.Stay);
         }
@@ -299,6 +299,9 @@ namespace puertos
                 //posiciones actuales de myheroe
 
                 //int numeracionLength = server.boardSize;
+
+
+                //en esta parte del codigo hay que cambiar la orientacion de la matriz, esta en formato [x,y], hay que cambiarlo a [y,x]
 
                 int goalX;
                 int goalY;
