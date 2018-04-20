@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,29 +26,32 @@ namespace puertos
 
         public hero myHero { get; set; }
         public List<hero> heroes;
-
+       
         public bool error { get; set; } = false;
-
+        
 
         public int currentTurn { get; private set; }
         public int maxTurns { get; private set; }
+        public int boardSize { get; set; }
         public bool finished { get; private set; }
         public bool errored { get; private set; }
         public string errorText { get; private set; }
         private string serverURL;
-        public char[,] Board { get; set; }
-        public List<int> taverns;
-        public List<Mina> minas;
-        public Mina mina { get; set;}
+        public char[,] Board { get;set; }
+        public int[,] numeracion { get; set; }
+        public bool[,] recorrido { get; set; }
 
-        public int[]Mina { get; set; }
+        public int[] Mines { get; set; }
+        public int[] Drink { get; set; }
+
+
+
 
         public Server(string url, string key, string mode = "training", uint turns = 0, string map = null)
         {
             serverURL = url;
             this.key = key;
             this.mode = mode;
-
             if (mode == "training")
             {
                 this.map = map;
@@ -91,7 +94,7 @@ namespace puertos
                 dataStream.Write(byteArray, 0, byteArray.Length);
                 // Se cierra stream
                 dataStream.Close();
-                
+
                 // Recibe la respuesta
                 WebResponse response = request.GetResponse();
 
@@ -136,7 +139,13 @@ namespace puertos
             currentTurn = gameResponse.game.turns;
             maxTurns = gameResponse.game.maxTurns;
             finished = gameResponse.game.finished;
-            CrearTablero(gameResponse.game.board.size, gameResponse.game.board.tiles, Board, Mina);
+
+            boardSize = gameResponse.game.board.size;
+            //createBoard(gameResponse.game.board.size, gameResponse.game.board.tiles);
+            CrearTablero(gameResponse.game.board.size, gameResponse.game.board.tiles, Board, recorrido);
+
+
+
 
 
         }
@@ -176,17 +185,18 @@ namespace puertos
 
         }
 
-        private void CrearTablero(int size,string data, char[,] board, int[] Minas)
+        private void CrearTablero(int size,string data, char[,] board, bool[,] recorrido)
         {
             
             int cont  = 0;
-            int contMina = 0;
             char[,] arrray = new char[size, size];
+            bool[,] recorridoAux = new bool[size, size];
 
             for (int i = 0; i < size; i++) 
             {
                 for(int j = 0; j < size; j++)
                 {
+                    recorridoAux[i, j] = true; 
                     cont++;
                    if(data[cont-1] == '@')
                     {
@@ -212,15 +222,11 @@ namespace puertos
                     else if (data[cont] == '#')
                     {
                         arrray[i, j] = '#';
+                        recorridoAux[i, j] = false;
                     }
                     else if (data[cont-1] == '$')
                     {
-                        this.Mina[0] = i;
-                        contMina++;
-
-                        //A-D minas de alguien
-                        //$ Mina neutral
-                        // Q taverna
+                        
                          if(data[cont] == '1' && myHero.id != 1)
                         {
                             arrray[i, j] = 'A';
@@ -277,35 +283,12 @@ namespace puertos
                 Console.WriteLine();
             }
             Board = arrray;
-            
+            recorrido = recorridoAux;
             
 
         }
 
        
-    }
-
-    public class Mina
-    {
-        public char cTipo;
-
-        public Mina(char cTipo)
-        {
-            this.cTipo = cTipo;
-        }
-
-        public void setTipo(char cTipo)
-        {
-            this.cTipo = cTipo;
-        }
-
-        public char getTipo()
-        {
-            return cTipo;
-        }
-
-       
-
     }
 }
 
