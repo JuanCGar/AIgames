@@ -150,13 +150,13 @@ namespace puertos
         }
 
         public bool nextToABeer(){ //checar cual es el signo que representa las tabernas porque evidentemente [] no es
-            if (server.Board[server.myHero.pos.y + 1 , server.myHero.pos.x] != '[')
+            if (server.Board[server.myHero.pos.y + 1 , server.myHero.pos.x] != 'Q')
                 return true;
-            else if (server.Board[server.myHero.pos.y - 1 , server.myHero.pos.x] != '[')
+            else if (server.Board[server.myHero.pos.y - 1 , server.myHero.pos.x] != 'Q')
                 return true; 
-            else if (server.Board[server.myHero.pos.y , server.myHero.pos.x + 1] != '[')
+            else if (server.Board[server.myHero.pos.y , server.myHero.pos.x + 1] != 'Q')
                 return true;
-            else if (server.Board[server.myHero.pos.y , server.myHero.pos.x - 1] != '[')
+            else if (server.Board[server.myHero.pos.y , server.myHero.pos.x - 1] != 'Q')
                 return true;
             else
                 return false;
@@ -166,13 +166,13 @@ namespace puertos
         {
             if (t)
             {
-                if (server.Board[server.myHero.pos.y + 1 , server.myHero.pos.x] != '[')
+                if (server.Board[server.myHero.pos.y + 1 , server.myHero.pos.x] != 'Q')
                     return 'd';
-                if (server.Board[server.myHero.pos.y - 1 , server.myHero.pos.x] != '[')
+                if (server.Board[server.myHero.pos.y - 1 , server.myHero.pos.x] != 'Q')
                     return 'u';
-                if (server.Board[server.myHero.pos.y , server.myHero.pos.x + 1] != '[')
+                if (server.Board[server.myHero.pos.y , server.myHero.pos.x + 1] != 'Q')
                     return 'r';
-                if (server.Board[server.myHero.pos.y , server.myHero.pos.x - 1] != '[')
+                if (server.Board[server.myHero.pos.y , server.myHero.pos.x - 1] != 'Q')
                     return 'l';
             }
 
@@ -430,7 +430,7 @@ namespace puertos
 
                 }
 */
-                char[] headings = new char[5] { 'u', 'r', 'l', 'd', 's'};
+                char[] headings = new char[5] { 'u', 'r', 'd', 'l', 's'};
 
                 int hn = server.headingNumber;
                 if (hn == 0)
@@ -449,12 +449,20 @@ namespace puertos
                 }
                 else
                 {
-                    Console.WriteLine(headings[(server.headingNumber+1) % 5]);
-                    while (!frontIsClear(headings[(server.headingNumber+1) % 5]))
+                    //Console.WriteLine(headings[(server.headingNumber+1) % 5]);
+                    if (frontIsClear(headings[(server.headingNumber + 1) % 5]))
                     {
-                        server.headingNumber = server.headingNumber + 1;
+                        server.headingNumber++;
                         hn = server.headingNumber;
-                        Console.WriteLine("correct heading to: " + headings[server.headingNumber % 5]);
+                    }
+                    else
+                    {
+                        while (!frontIsClear(headings[(server.headingNumber + 1) % 5]))
+                        {
+                            server.headingNumber = server.headingNumber + 1;
+                            hn = server.headingNumber;
+                            Console.WriteLine("correct heading to: " + headings[server.headingNumber % 5]);
+                        }
                     }
                     //Console.WriteLine("si estoy entrando");
                     if (hn == 0)
