@@ -129,9 +129,10 @@ namespace puertos
                     return 'r';
                 if (server.Board[server.myHero.pos.x - 1, server.myHero.pos.y] != '[' || server.Board[server.myHero.pos.x, server.myHero.pos.y + 1] != ']')
                     return 'l';
-            }else{
-                return 'n';
             }
+
+                return 'n';
+            
         }
 
         public bool nextToGold()
@@ -160,9 +161,9 @@ namespace puertos
                     return 'r';
                 else if (server.Board[server.myHero.pos.x - 1, server.myHero.pos.y] != '$')
                     return 'l';
-            }else{
-                return 'n';
             }
+                return 'n';
+
         }
 
         public void calculateNextMove(int[] actualPos, int[] goalPos, int numeracionInicial){
@@ -264,6 +265,19 @@ namespace puertos
 
         }
 
+        public void moveTo(char heading){
+            if (heading == 'u')
+                server.moveHero(Direction.North);
+            if (heading == 'd')
+                server.moveHero(Direction.South);
+            if (heading == 'r')
+                server.moveHero(Direction.East);
+            if (heading == 'l')
+                server.moveHero(Direction.West);
+            if (heading == 's')
+                server.moveHero(Direction.Stay);
+        }
+
         public void start()
         {
             Console.Out.WriteLine("Bot is running");
@@ -298,6 +312,7 @@ namespace puertos
 
                 int[] spawnPos = new int[2] { spawnX, spawnY };
                 int[] goal = new int[2] { server.boardSize-1, server.boardSize-1 };
+                char heading = 'u';
                 //Console.WriteLine("x: " + actualX + " y: " + actualY);
                 //calculateNextMove(actualPos,goal,1);
                 /*
@@ -310,7 +325,7 @@ namespace puertos
                 }
                 */
                
-
+                /*
 
                 if (server.Board[actualX+1, actualY] == '$')
                     server.moveHero(Direction.West);
@@ -346,9 +361,11 @@ namespace puertos
 
 
                 }
+*/
 
-
-
+                while(frontIsClear(heading)){
+                    moveTo(heading);
+                }
                 
 
                 /* RANDOM BOT
