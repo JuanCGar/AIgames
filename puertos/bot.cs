@@ -29,19 +29,19 @@ namespace puertos
             {
 
                 //<<<<<<< HEAD
-                return ((server.myHero.pos.x != 0) && server.Board[server.myHero.pos.x - 1, server.myHero.pos.y] != '#');
+                //return ((server.myHero.pos.x != 0) && (server.Board[server.myHero.pos.x - 1, server.myHero.pos.y] != '#'||server.Board[server.myHero.pos.x - 1, server.myHero.pos.y] != 'Q'));
                 //=======
 
-                {
+
                     if (server.myHero.pos.x == 0)
                     {
                         return false;
                     }
                     else
                     {
-                        return server.Board[server.myHero.pos.x - 1, server.myHero.pos.y] != '#';
+                    return server.Board[server.myHero.pos.x - 1, server.myHero.pos.y] != '#';
                     }
-                }
+
 
                 //return((server.myHero.pos.x != 0) || server.Board[server.myHero.pos.x - 1,server.myHero.pos.y] != '#');
                 //>>>>>>> 36eaf25f53d3df4eeb06c30a9173b5f1945e5ffc
@@ -96,29 +96,62 @@ namespace puertos
         public bool rightIsClear(char heading)
         {
             if (heading == 'u')
-                return ((server.myHero.pos.x != server.Board.Length) || server.Board[server.myHero.pos.y , server.myHero.pos.x + 1] != '#');
+            {
+                if (server.myHero.pos.y == server.Board.Length - 1)
+                {
+                    return false;
+                }
+                else
+                {
+                    return server.Board[server.myHero.pos.x, server.myHero.pos.y + 1] != '#';
+                }
+            }
+            //return ((server.myHero.pos.x != server.Board.Length) || server.Board[server.myHero.pos.y , server.myHero.pos.x + 1] != '#');
             else if (heading == 'd')
-                return ((server.myHero.pos.x != server.Board.Length) || server.Board[server.myHero.pos.y , server.myHero.pos.x - 1] != '#');
+            {
+                if ((server.myHero.pos.y == 0))
+                {
+                    return false;
+                }
+                else
+                {
+                    return server.Board[server.myHero.pos.x, server.myHero.pos.y - 1] != '#';
+                }
+            }
+            //return ((server.myHero.pos.x != server.Board.Length) || server.Board[server.myHero.pos.y , server.myHero.pos.x - 1] != '#');
             else if (heading == 'r')
-                return ((server.myHero.pos.x != server.Board.Length) || server.Board[server.myHero.pos.y + 1 , server.myHero.pos.x] != '#');
+            {
+                if (server.myHero.pos.x + 1 == server.Board.Length - 1)
+                {
+                    return false;
+                }
+                else
+                {
+                    return server.Board[server.myHero.pos.x + 1, server.myHero.pos.y] != '#';
+                }
+            }
+            //return ((server.myHero.pos.x != server.Board.Length) || server.Board[server.myHero.pos.y + 1 , server.myHero.pos.x] != '#');
             else if (heading == 'l')
-                return ((server.myHero.pos.x != server.Board.Length) || server.Board[server.myHero.pos.y - 1 , server.myHero.pos.x] != '#');
+            {
+                if (server.myHero.pos.x - 1 == 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    return server.Board[server.myHero.pos.x - 1, server.myHero.pos.y] != '#';
+                }
+            }
+            //return ((server.myHero.pos.x != server.Board.Length) || server.Board[server.myHero.pos.y - 1 , server.myHero.pos.x] != '#');
             else
+            {
                 return false;
+            }
         }
 
         public bool rightIsBlocked(char heading)
         {
-            if (heading == 'u')
-                return ((server.myHero.pos.x == server.Board.Length) || server.Board[server.myHero.pos.y , server.myHero.pos.x + 1] == '#');
-            else if (heading == 'd')
-                return ((server.myHero.pos.x == server.Board.Length) || server.Board[server.myHero.pos.y , server.myHero.pos.x - 1] == '#');
-            else if (heading == 'r')
-                return ((server.myHero.pos.x == server.Board.Length) || server.Board[server.myHero.pos.y + 1 , server.myHero.pos.x] == '#');
-            else if (heading == 'l')
-                return ((server.myHero.pos.x == server.Board.Length) || server.Board[server.myHero.pos.y - 1 , server.myHero.pos.x] == '#');
-            else
-                return false;
+            return !rightIsClear((heading));
         }
 
         public bool leftIsClear(char heading)
@@ -182,13 +215,13 @@ namespace puertos
 
         public bool nextToGold()
         {
-            if (server.Board[server.myHero.pos.y + 1 , server.myHero.pos.x] != '$')
+            if (server.Board[server.myHero.pos.x + 1 , server.myHero.pos.y] != '$')
                 return true;
-            else if (server.Board[server.myHero.pos.y - 1 , server.myHero.pos.x] != '$')
+            else if (server.Board[server.myHero.pos.x - 1 , server.myHero.pos.y] != '$')
                 return true;
-            else if (server.Board[server.myHero.pos.y , server.myHero.pos.x + 1] != '$')
+            else if (server.Board[server.myHero.pos.x , server.myHero.pos.y + 1] != '$')
                 return true;
-            else if (server.Board[server.myHero.pos.y , server.myHero.pos.x - 1] != '$')
+            else if (server.Board[server.myHero.pos.x , server.myHero.pos.y - 1] != '$')
                 return true;
             else
                 return false;
@@ -198,16 +231,24 @@ namespace puertos
         {
             if (t)
             {
-                if (server.Board[server.myHero.pos.y + 1, server.myHero.pos.x] != '$')
-                    return 'u';
-                else if (server.Board[server.myHero.pos.y - 1, server.myHero.pos.x] != '$')
-                    return 'd';
-                else if (server.Board[server.myHero.pos.y, server.myHero.pos.x + 1] != '$')
-                    return 'r';
-                else if (server.Board[server.myHero.pos.y, server.myHero.pos.x - 1] != '$')
-                    return 'l';
+                if (server.myHero.pos.x != 0)
+                    if (server.Board[server.myHero.pos.x - 1, server.myHero.pos.y] == '$')
+                        return 'u';
+                    else if (server.Board[server.myHero.pos.x + 1, server.myHero.pos.y] == '$')
+                        return 'd';
+                    else if (server.Board[server.myHero.pos.x, server.myHero.pos.y + 1] == '$')
+                        return 'r';
+                else if ((server.myHero.pos.y != 0))
+                        {
+                            if (server.Board[server.myHero.pos.x, server.myHero.pos.y - 1] == '$')
+                            {
+
+                                return 'l';
+                            }
+                        }
+                    
             }
-                return 'n';
+                return 's';
 
         }
 
@@ -430,7 +471,7 @@ namespace puertos
 
                 }
 */
-                char[] headings = new char[5] { 'u', 'r', 'd', 'l', 's'};
+                char[] headings = new char[5] { 'r', 'd', 'l', 'u', 's'};
 
                 int hn = server.headingNumber;
                 if (hn == 0)
@@ -440,20 +481,35 @@ namespace puertos
 
                 if (frontIsClear(heading))
                 {
-                    moveTo(heading);
-                    Console.WriteLine("heading: " + heading);
+                    /*
+                    if (nextToGold())
+                    {
+                        
+                        moveTo(nextToGold(true));
+
+                    }
+                    else
+                    {
+                    */
+                        moveTo(heading);
+                        Console.WriteLine("heading: " + heading);
+                    //}
+
 
 
 
                     Console.WriteLine("(" + server.myHero.pos.x + "," + server.myHero.pos.y + ")");
+
                 }
                 else
                 {
                     //Console.WriteLine(headings[(server.headingNumber+1) % 5]);
                     if (frontIsClear(headings[(server.headingNumber + 1) % 5]))
                     {
+                        //server.addCuentaMovimientos++; 
                         server.headingNumber++;
                         hn = server.headingNumber;
+
                     }
                     else
                     {
