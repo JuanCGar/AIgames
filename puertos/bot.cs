@@ -377,6 +377,7 @@ namespace puertos
                     if (frontIsClear(heading))
                     {
                         moveTo(heading);
+                    Console.WriteLine("heading: " + heading);
                     }
 
                     if (frontIsBlocked(heading))
