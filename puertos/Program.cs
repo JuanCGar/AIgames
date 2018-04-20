@@ -19,7 +19,7 @@ namespace puertos
         static void Main(string[] args)
         {
             Server server;
-            server = new Server("http://www.aigames.host", "s9kmhgad", "training",200 );
+            server = new Server("http://www.aigames.host", "s9kmhgad", "training",300 );
 
             bot bot = new bot(server);
 
