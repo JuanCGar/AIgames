@@ -382,13 +382,7 @@ namespace puertos
 
 
                     Console.WriteLine("("+server.myHero.pos.x + ","+server.myHero.pos.y+")");
-                    }
-
-                Console.Write("Front Is");
-                Console.WriteLine(frontIsClear(heading) ? " clear" : " blocked");
-
-
-                if (!frontIsClear(heading))
+                }else
                     {
                     while (!frontIsClear(headings[(server.headingNumber + 1) % 5]))
                     {
@@ -400,7 +394,8 @@ namespace puertos
                     heading = headings[hn % 5];//se recorre de manera circular el arreglo
                     }
 
-
+                Console.Write("Front Is");
+                Console.WriteLine(frontIsClear(heading) ? " clear" : " blocked");
 
 
                 /* RANDOM BOT
