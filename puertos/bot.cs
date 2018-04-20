@@ -26,9 +26,9 @@ namespace puertos
         public bool frontIsClear(char heading)
         {
             if (heading == 'u')
-<<<<<<< HEAD
+
                 return ((server.myHero.pos.x != 0) && server.Board[server.myHero.pos.x - 1,server.myHero.pos.y] != '#');
-=======
+
             {
                 if (server.myHero.pos.x == 0)
                 {
@@ -40,7 +40,7 @@ namespace puertos
                 }
             }
                 //return((server.myHero.pos.x != 0) || server.Board[server.myHero.pos.x - 1,server.myHero.pos.y] != '#');
->>>>>>> 36eaf25f53d3df4eeb06c30a9173b5f1945e5ffc
+
             else if(heading == 'd')
             if(server.myHero.pos.x == server.boardSize-1)
             {
@@ -417,10 +417,10 @@ namespace puertos
                 char[] headings = new char[5] { 'u', 'r', 'l', 'd', 's'};
 
                 int hn = server.headingNumber;
-                if (hn > 0)
+                if (hn == 0)
                     heading = headings[(hn) % 5];
                 else
-                    heading = headings[(hn - 1) % 5];
+                    heading = headings[(hn-1) % 5];
 
                     if (frontIsClear(heading))
                     {
